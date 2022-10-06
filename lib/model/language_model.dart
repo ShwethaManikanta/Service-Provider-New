@@ -30,16 +30,23 @@ class LanguageModel {
 
 class LanguageList {
   String? id;
+  String? country_name_id;
   String? languageKey;
   String? language;
   String? status;
   String? createdAt;
 
   LanguageList(
-      {this.id, this.languageKey, this.language, this.status, this.createdAt});
+      {this.id,
+      this.languageKey,
+      this.language,
+      this.status,
+      this.createdAt,
+      this.country_name_id});
 
   LanguageList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    country_name_id = json['country_name_id'];
     languageKey = json['language_key'];
     language = json['language'];
     status = json['status'];
@@ -49,6 +56,7 @@ class LanguageList {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['country_name_id'] = this.country_name_id;
     data['language_key'] = this.languageKey;
     data['language'] = this.language;
     data['status'] = this.status;

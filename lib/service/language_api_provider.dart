@@ -4,8 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:serviceprovider/model/language_model.dart';
 
+var list1 = <Map<String, dynamic>>[];
 
 class LanguageAPIProvider with ChangeNotifier {
+  List<LanguageList> list2 = <LanguageList>[];
+
   bool _error = false;
   String _errorMessage = "";
   LanguageModel? _languageModel;
@@ -31,6 +34,9 @@ class LanguageAPIProvider with ChangeNotifier {
       try {
         final jsonResponse = jsonDecode(response.body);
         _languageModel = LanguageModel.fromJson(jsonResponse);
+        list2 = languageModel!.languageList!
+            .where((element) => element.country_name_id == '1')
+            .toList();
         print("Fetching _languageModel uri success");
       } catch (e) {
         _error = false;

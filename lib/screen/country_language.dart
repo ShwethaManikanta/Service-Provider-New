@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,8 @@ import 'package:serviceprovider/service/api_service.dart';
 import 'package:serviceprovider/service/language_api_provider.dart';
 import 'package:serviceprovider/service/translation_api_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../model/language_model.dart';
 
 class CountryLanguageScreen extends StatefulWidget {
   const CountryLanguageScreen({Key? key}) : super(key: key);
@@ -155,6 +159,52 @@ class _GetLanguageState extends State<GetLanguage> {
     "assets/south.png",
     "assets/antarctica.jpeg"
   ];
+  List<String> countryEurope = [
+    "assets/europe/Albania.png",
+    "assets/europe/Andorra.png",
+    "assets/europe/Austria.png",
+    "assets/europe/Belarus.png",
+    "assets/europe/Belgium.png",
+    "assets/europe/Bosnia and Herzegovina.png",
+    "assets/europe/Bulgaria.png",
+    "assets/europe/Croatia.png",
+    "assets/europe/Czechia (Czech Republic).png",
+    "assets/europe/Denmark.png",
+    "assets/europe/Estonia.png",
+    "assets/europe/Finland.png",
+    "assets/europe/France.png",
+    "assets/europe/Germany.png",
+    "assets/europe/Greece.png",
+    "assets/europe/Holy See.png",
+    "assets/europe/Hungary.png",
+    "assets/europe/Iceland.png",
+    "assets/europe/Ireland.png",
+    "assets/europe/Italy.png",
+    "assets/europe/Latvia.png",
+    "assets/europe/Liechtenstein.png",
+    "assets/europe/Lithuania.png",
+    "assets/europe/Luxembourg.png",
+    "assets/europe/Malta.png",
+    "assets/europe/Moldova.png",
+    "assets/europe/Monaco.png",
+    "assets/europe/Montenegro.png",
+    "assets/europe/Netherlands.png",
+    "assets/europe/North Macedonia.png",
+    "assets/europe/Norway.png",
+    "assets/europe/Poland.png",
+    "assets/europe/Portugal.png",
+    "assets/europe/Romania.png",
+    "assets/europe/Russia.png",
+    "assets/europe/San Marino.png",
+    "assets/europe/Serbia.png",
+    "assets/europe/Slovakia.png",
+    "assets/europe/Slovenia.png",
+    "assets/europe/Spain.png",
+    "assets/europe/Sweden.png",
+    "assets/europe/Switzerland.png",
+    "assets/europe/Ukraine.png",
+    "assets/europe/United Kingdom.png",
+  ];
   List<String> countryMap = [
     "assets/country_map/india1.png",
     "assets/country_map/CHINA.png",
@@ -246,6 +296,14 @@ class _GetLanguageState extends State<GetLanguage> {
   @override
   Widget build(BuildContext context) {
     final _languageAPIProvider = Provider.of<LanguageAPIProvider>(context);
+
+    // List<LanguageList> indialist = [];
+    // List<LanguageList?> data = [];
+    // List<LanguageList?> nullableWidgets = [];
+    // nullableWidgets.removeWhere((element) => element == '1');
+    // final res = nullableWidgets
+    //     .where((element) => element['country_name_id'] == '1')
+    //     .toList();
     final translationAPIProvider = Provider.of<TranslationAPIProvider>(context);
 
     return Scaffold(
@@ -414,7 +472,13 @@ class _GetLanguageState extends State<GetLanguage> {
                                                             return GestureDetector(
                                                               onTap: () {
                                                                 setState(() {
-                                                                  //  continentSelect = true;
+                                                                  //TODO:switch case
+                                                                  // switch (
+                                                                  //     index) {
+                                                                  //   case 0:
+                                                                  // }
+                                                                  // continentSelect =
+                                                                  // true;
                                                                   print("Continent ---------Change--- value" +
                                                                       continentSelect
                                                                           .toString());
@@ -425,12 +489,16 @@ class _GetLanguageState extends State<GetLanguage> {
 
                                                                   (index == 1)
                                                                       ? buildCountiesMap(
-                                                                          context)
-                                                                      : Utils.showSnackBar(
-                                                                          context:
+                                                                          context,
+                                                                          index)
+                                                                      : (index ==
+                                                                              3)
+                                                                          ? buildCountiesMap(
                                                                               context,
-                                                                          text:
-                                                                              "Will be update soon !!!");
+                                                                              index)
+                                                                          : Utils.showSnackBar(
+                                                                              context: context,
+                                                                              text: "Will be update soon !!!");
                                                                 });
                                                               },
                                                               child: Container(
@@ -691,7 +759,6 @@ class _GetLanguageState extends State<GetLanguage> {
                             ),
                           )
                         : GridView.builder(
-
                             //      delay: Duration(milliseconds: 10),
                             //    showItemDuration: Duration(milliseconds: 10),
                             reverse: true,
@@ -700,9 +767,12 @@ class _GetLanguageState extends State<GetLanguage> {
                             shrinkWrap: true,
                             padding: const EdgeInsets.all(0),
                             primary: false,
+                            // itemCount: data.length,
                             // itemCount: 10,
-                            itemCount: _languageAPIProvider
-                                .languageModel!.languageList!.length,
+                            // itemCount: _languageAPIProvider
+                            //     .languageModel!.languageList!.length,
+                            itemCount: _languageAPIProvider.list2.length,
+                            // itemCount: list1.length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisSpacing: 15,
@@ -710,11 +780,25 @@ class _GetLanguageState extends State<GetLanguage> {
                                     mainAxisSpacing: 20,
                                     mainAxisExtent: 70),
                             itemBuilder: (context, index) {
+                              print(
+                                  'dee${_languageAPIProvider.languageModel!.languageList!.where((element) => element.country_name_id == '1').length}');
+                              // var r = _languageAPIProvider
+                              //     .languageModel!.languageList!
+                              //     .indexWhere((element) =>
+                              //         element.country_name_id == '1');
+                              // if (_languageAPIProvider
+                              //         .languageModel!
+                              //         .languageList![index]
+                              //         .country_name_id! ==
+                              //     '1') {
                               return buildNeumorphicButton(
                                   _languageAPIProvider, index, context);
-                            }),
+
+                              // }
+                            },
+                          ),
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
 
@@ -730,17 +814,19 @@ class _GetLanguageState extends State<GetLanguage> {
                         height: 70,
                         child: InkWell(
                           onTap: () {
-                            //   if (countryCode.isNotEmpty)
-                            {
+                            print(
+                                'langdetails${translationAPIProvider.translationModel!.languageDetails![3]}');
+                            if (countryCode.isEmpty) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => SignInScreen(
                                         countryCode: countryCode,
                                         lanKey: APIService.lanKey,
                                       )));
-                            } /*else {
-                                Utils.showSnackBar(
-                                    context: context, text: "Choose Your Country");
-                              }*/
+                            } else {
+                              Utils.showSnackBar(
+                                  context: context,
+                                  text: "Choose Your Country");
+                            }
                           },
                           child: Card(
                             shape: RoundedRectangleBorder(
@@ -769,7 +855,7 @@ class _GetLanguageState extends State<GetLanguage> {
         ));
   }
 
-  Future<dynamic> buildCountiesMap(BuildContext context) {
+  Future<dynamic> buildCountiesMap(BuildContext context, int indexw) {
     return showDialog(
         barrierColor: Colors.blue[800],
         context: context,
@@ -791,7 +877,9 @@ class _GetLanguageState extends State<GetLanguage> {
                     style: NeumorphicStyle(depth: 0, color: Colors.blue[800]),
                     child: GridView.builder(
                         shrinkWrap: true,
-                        itemCount: countryMap.length,
+                        itemCount: (indexw == 1)
+                            ? countryMap.length
+                            : countryEurope.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisSpacing: 15,
@@ -801,6 +889,8 @@ class _GetLanguageState extends State<GetLanguage> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
+                              // print(
+                              //     "lenght${countryEurope.length}${countryMap.length}");
                               setState(() {
                                 if (index == 0) continentSelect = true;
                                 print("Continent ---------Change--- value" +
@@ -822,7 +912,9 @@ class _GetLanguageState extends State<GetLanguage> {
                                 children: [
                                   Align(
                                       alignment: Alignment.center,
-                                      child: Image.asset(countryMap[index])),
+                                      child: indexw == 1
+                                          ? Image.asset(countryMap[index])
+                                          : Image.asset(countryEurope[index])),
                                   /* Align(
                                     alignment: Alignment.center,
                                     child: Text(
@@ -851,8 +943,7 @@ class _GetLanguageState extends State<GetLanguage> {
       child: InkWell(
         onTap: () {
           setState(() async {
-            lanKey = _languageAPIProvider
-                .languageModel!.languageList![index].languageKey!;
+            lanKey = _languageAPIProvider.list2[index].languageKey!;
             APIService.lanKey = "${lanKey}";
             print("Language Key - From Change------" + lanKey);
 
@@ -869,9 +960,19 @@ class _GetLanguageState extends State<GetLanguage> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
-                child: Text(
-                  _languageAPIProvider.languageModel!.languageList![index]
-                      .language!, //changed to 1 from index
+                child:
+                    // (_languageAPIProvider.languageModel!
+                    //           .languageList![index].country_name_id! ==
+                    //       '1')
+                    //   ?
+                    Text(
+                  // '',
+                  _languageAPIProvider.list2[index].language!,
+                  // _languageAPIProvider
+                  //                 .languageModel!.languageList!
+                  //                 .where(
+                  //                     (element) => element.country_name_id == '1').,
+                  //changed to 1 from index
                   style: CommonStyles.blue13(),
                   textAlign: TextAlign.center,
                 ),
