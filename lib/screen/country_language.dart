@@ -845,6 +845,40 @@ class _GetLanguageState extends State<GetLanguage> {
                         ),
                       ),
                       SizedBox(
+                        height: 70,
+                        child: InkWell(
+                          onTap: () {
+                            print(
+                                'langdetails${translationAPIProvider.translationModel!.languageDetails![3]}');
+                            if (countryCode.isEmpty) {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SignInScreen(
+                                        countryCode: countryCode,
+                                        lanKey: APIService.lanKey,
+                                      )));
+                            } else {
+                              Utils.showSnackBar(
+                                  context: context,
+                                  text: "Choose Your Country");
+                            }
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              child: Center(
+                                child: Text(
+                                    translationAPIProvider
+                                        .translationModel!.languageDetails![3],
+                                    style: CommonStyles.blue18900()),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
                         height: 50,
                       )
                     ],
